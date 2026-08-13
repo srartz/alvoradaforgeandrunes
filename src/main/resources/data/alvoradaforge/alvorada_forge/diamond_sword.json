@@ -1,0 +1,27 @@
+{
+  "priority": 0,
+  "inputs": [
+    {
+      "item": "minecraft:iron_sword",
+      "count": 1
+    },
+    {
+      "item": "minecraft:diamond",
+      "count": 2
+    }
+  ],
+  "result": {
+    "id": "minecraft:diamond_sword",
+    "count": 1
+  },
+  "experience_cost": 5,
+  "hammering": 5,
+  "cycle_ticks": 36,
+  "quality": "expert",
+  "benefits": [
+    "durability",
+    "weapon"
+  ],
+  "copy_input_components": true,
+  "anvil_damage_chance": 0.12
+}

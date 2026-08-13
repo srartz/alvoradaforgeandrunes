@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:crafting_shapeless", "category": "misc",
+  "ingredients": [{"item":"minecraft:ink_sac"},{"item":"minecraft:green_dye"},{"item":"minecraft:glow_berries"}],
+  "result": {"id":"alvoradaforge:verdant_ink","count":2}
+}

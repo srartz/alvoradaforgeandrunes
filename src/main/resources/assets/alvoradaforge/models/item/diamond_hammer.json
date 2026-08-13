@@ -1,0 +1,7 @@
+{
+  "parent": "alvoradaforge:item/template_hammer",
+  "textures": {
+    "head": "minecraft:block/diamond_block",
+    "handle": "minecraft:block/oak_planks"
+  }
+}

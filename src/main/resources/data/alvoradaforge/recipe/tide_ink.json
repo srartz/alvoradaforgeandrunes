@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:crafting_shapeless", "category": "misc",
+  "ingredients": [{"item":"minecraft:ink_sac"},{"item":"minecraft:blue_dye"},{"item":"minecraft:glow_ink_sac"}],
+  "result": {"id":"alvoradaforge:tide_ink","count":2}
+}

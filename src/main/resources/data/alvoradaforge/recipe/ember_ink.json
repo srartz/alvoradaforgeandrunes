@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:crafting_shapeless", "category": "misc",
+  "ingredients": [{"item":"minecraft:ink_sac"},{"item":"minecraft:red_dye"},{"item":"minecraft:glowstone_dust"}],
+  "result": {"id":"alvoradaforge:ember_ink","count":2}
+}

@@ -1,0 +1,5 @@
+{
+  "type": "minecraft:crafting_shapeless", "category": "misc",
+  "ingredients": [{"item":"minecraft:ink_sac"},{"item":"minecraft:purple_dye"},{"item":"minecraft:ender_pearl"}],
+  "result": {"id":"alvoradaforge:void_ink","count":2}
+}
