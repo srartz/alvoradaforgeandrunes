@@ -1,0 +1,1 @@
+{"priority":0,"inputs":[{"item":"minecraft:iron_chestplate","count":1},{"item":"minecraft:diamond","count":8}],"result":{"id":"minecraft:diamond_chestplate","count":1},"experience_cost":8,"hammering":8,"cycle_ticks":32,"quality":"expert","benefits":["auto"],"copy_input_components":true,"anvil_damage_chance":0.16}

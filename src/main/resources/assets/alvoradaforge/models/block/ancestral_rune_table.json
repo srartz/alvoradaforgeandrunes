@@ -1,0 +1,9 @@
+{
+  "parent": "alvoradaforge:block/rune_table",
+  "textures": {
+    "wood": "minecraft:block/gilded_blackstone",
+    "stone": "minecraft:block/obsidian",
+    "rune": "minecraft:block/gold_block",
+    "particle": "minecraft:block/obsidian"
+  }
+}

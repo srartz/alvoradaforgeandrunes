@@ -42,6 +42,11 @@ public final class RuneItem extends Item {
         tooltip.add(Component.translatable("tooltip.alvoradaforge.rune_passive_effect",
                 runeType.passiveEffect().value().getDisplayName(), runeType.passiveAmplifier() + 1)
                 .withStyle(ChatFormatting.LIGHT_PURPLE));
+        Integer accuracy = stack.get(ModDataComponents.RUNE_ACCURACY.get());
+        if (accuracy != null) {
+            tooltip.add(Component.translatable("tooltip.alvoradaforge.rune_accuracy", accuracy)
+                    .withStyle(accuracy >= 90 ? ChatFormatting.GOLD : ChatFormatting.GRAY));
+        }
     }
 
     @Override
@@ -82,6 +87,10 @@ public final class RuneItem extends Item {
         if (!level.isClientSide) {
             target.enchant(enchantment, enchantmentLevel);
             target.set(ModDataComponents.RUNE_TYPE.get(), runeType.serializedName());
+            Integer accuracy = rune.get(ModDataComponents.RUNE_ACCURACY.get());
+            if (accuracy != null) {
+                target.set(ModDataComponents.RUNE_ACCURACY.get(), accuracy);
+            }
             if (!player.getAbilities().instabuild) {
                 rune.shrink(1);
             }

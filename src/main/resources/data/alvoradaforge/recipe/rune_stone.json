@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:crafting_shapeless",
-  "category": "misc",
-  "ingredients": [
-    { "item": "minecraft:polished_deepslate" },
-    { "item": "minecraft:amethyst_shard" }
-  ],
-  "result": { "id": "alvoradaforge:rune_stone", "count": 2 }
-}

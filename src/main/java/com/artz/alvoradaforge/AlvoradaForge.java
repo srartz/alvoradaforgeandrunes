@@ -7,6 +7,8 @@ import com.artz.alvoradaforge.registry.ModBlockEntities;
 import com.artz.alvoradaforge.registry.ModDataComponents;
 import com.artz.alvoradaforge.registry.ModCreativeModeTabs;
 import com.artz.alvoradaforge.registry.ModItems;
+import com.artz.alvoradaforge.progression.ProgressionCommands;
+import com.artz.alvoradaforge.guide.GuideCommand;
 import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
@@ -33,6 +35,8 @@ public final class AlvoradaForge {
         NeoForge.EVENT_BUS.addListener(ForgeEvents::onItemAttributes);
         NeoForge.EVENT_BUS.addListener(ForgeEvents::onItemTooltip);
         NeoForge.EVENT_BUS.addListener(ForgeEvents::onPlayerTick);
+        NeoForge.EVENT_BUS.addListener(ProgressionCommands::register);
+        NeoForge.EVENT_BUS.addListener(GuideCommand::register);
     }
 
     public static ResourceLocation id(String path) {

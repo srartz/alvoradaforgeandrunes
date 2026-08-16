@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "decorations",
+  "pattern": ["GAG", "OTO", "GAG"],
+  "key": {
+    "G": { "item": "minecraft:gold_ingot" },
+    "A": { "item": "alvoradaforge:ancestral_rune_stone" },
+    "O": { "item": "minecraft:crying_obsidian" },
+    "T": { "item": "alvoradaforge:rune_table" }
+  },
+  "result": { "id": "alvoradaforge:ancestral_rune_table", "count": 1 }
+}

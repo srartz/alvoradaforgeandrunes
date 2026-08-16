@@ -13,6 +13,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import com.artz.alvoradaforge.progression.Faction;
+import com.artz.alvoradaforge.progression.Knowledge;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -121,6 +123,19 @@ public final class ForgeRecipeManager extends SimpleJsonResourceReloadListener {
             throw new JsonSyntaxException("cycle_ticks deve estar entre 12 e 200");
         }
         int priority = GsonHelper.getAsInt(json, "priority", 0);
+        Knowledge requiredKnowledge = null;
+        Faction requiredFaction = null;
+        int requiredReputation = 0;
+        if (json.has("requirements")) {
+            JsonObject requirements = GsonHelper.getAsJsonObject(json, "requirements");
+            if (requirements.has("knowledge")) {
+                requiredKnowledge = Knowledge.fromName(GsonHelper.getAsString(requirements, "knowledge"));
+            }
+            if (requirements.has("faction")) {
+                requiredFaction = Faction.fromName(GsonHelper.getAsString(requirements, "faction"));
+                requiredReputation = Math.max(0, GsonHelper.getAsInt(requirements, "reputation", 0));
+            }
+        }
 
         return new ForgeRecipe(
                 id,
@@ -136,7 +151,10 @@ public final class ForgeRecipeManager extends SimpleJsonResourceReloadListener {
                 requiredHits,
                 cycleTicks,
                 json.has("bonuses"),
-                priority
+                priority,
+                requiredKnowledge,
+                requiredFaction,
+                requiredReputation
         );
     }
 

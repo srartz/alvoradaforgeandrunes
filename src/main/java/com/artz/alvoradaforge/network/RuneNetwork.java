@@ -19,7 +19,7 @@ public final class RuneNetwork {
 
     @SubscribeEvent
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
-        PayloadRegistrar registrar = event.registrar("1");
+        PayloadRegistrar registrar = event.registrar("2");
         registrar.playToClient(OpenRuneScreenPayload.TYPE, OpenRuneScreenPayload.STREAM_CODEC,
                 RuneNetwork::handleOpenScreen);
         registrar.playToServer(RuneTracePayload.TYPE, RuneTracePayload.STREAM_CODEC, RuneNetwork::handleTrace);

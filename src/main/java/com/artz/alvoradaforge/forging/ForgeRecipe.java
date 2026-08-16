@@ -1,7 +1,11 @@
 package com.artz.alvoradaforge.forging;
 
 import java.util.List;
+import com.artz.alvoradaforge.progression.Faction;
+import com.artz.alvoradaforge.progression.Knowledge;
+import com.artz.alvoradaforge.progression.PlayerProgression;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -20,7 +24,10 @@ public record ForgeRecipe(
         int requiredHits,
         int cycleTicks,
         boolean customBonuses,
-        int priority
+        int priority,
+        Knowledge requiredKnowledge,
+        Faction requiredFaction,
+        int requiredReputation
 ) {
     public boolean matches(ItemStack left, ItemStack right) {
         if (inputs.isEmpty() || inputs.size() > 2 || left.getCount() != inputs.getFirst().count()) {
@@ -38,6 +45,11 @@ public record ForgeRecipe(
 
     public int materialCost() {
         return inputs.size() == 2 ? inputs.get(1).count() : 0;
+    }
+
+    public boolean canUse(Player player) {
+        return (requiredKnowledge == null || PlayerProgression.knows(player, requiredKnowledge))
+                && (requiredFaction == null || PlayerProgression.reputation(player, requiredFaction) >= requiredReputation);
     }
 
     public ItemStack createResult(ItemStack left) {

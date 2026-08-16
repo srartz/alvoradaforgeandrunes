@@ -129,6 +129,9 @@ public final class ForgeItemConfig {
         if (entry.has("bonuses")) {
             recipe.add("bonuses", entry.get("bonuses").deepCopy());
         }
+        if (entry.has("requirements")) {
+            recipe.add("requirements", entry.get("requirements").deepCopy());
+        }
         return recipe;
     }
 
@@ -149,7 +152,9 @@ public final class ForgeItemConfig {
         root.addProperty("reload_hint", "Edite este arquivo e execute /reload. IDs de mods ausentes sao ignorados.");
 
         JsonObject example = new JsonObject();
-        example.addProperty("enabled", true);
+        // Exemplo seguro: aparece no arquivo para ensinar o formato, mas nao
+        // substitui silenciosamente as receitas vanilla do datapack interno.
+        example.addProperty("enabled", false);
         example.addProperty("item", "minecraft:iron_pickaxe");
         example.addProperty("material", "minecraft:iron_ingot");
         example.addProperty("material_count", 3);

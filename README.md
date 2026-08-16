@@ -58,3 +58,17 @@ especial. O jogador precisa copiar o glifo com o mouse; a forma é validada no
 servidor antes da runa ser entregue. As quatro tintas dão acesso a 40 runas,
 com dez níveis de complexidade por família. Consulte o fluxo completo em
 [`docs/RUNES_AND_CONFIG.md`](docs/RUNES_AND_CONFIG.md).
+
+## Progressão do SMP
+
+O módulo de progressão adiciona reputação persistente para Anões e Kobolds,
+manuais de conhecimento, tintas ancestrais e requisitos opcionais para receitas.
+Ele expõe comandos para integração com Custom NPCs sem transformar esse mod em
+uma dependência obrigatória. Consulte
+[`docs/SMP_PROGRESSION.md`](docs/SMP_PROGRESSION.md).
+
+Os GameTests de integração são executados com:
+
+```powershell
+.\gradlew.bat gameTest
+```

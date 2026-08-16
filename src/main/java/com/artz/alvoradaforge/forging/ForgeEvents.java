@@ -39,7 +39,7 @@ public final class ForgeEvents {
     }
 
     public static void onAnvilUpdate(AnvilUpdateEvent event) {
-        ForgeRecipeManager.INSTANCE.find(event.getLeft(), event.getRight()).ifPresent(recipe -> {
+        ForgeRecipeManager.INSTANCE.find(event.getLeft(), event.getRight()).filter(recipe -> recipe.canUse(event.getPlayer())).ifPresent(recipe -> {
             ItemStack result = ForgingService.createResult(recipe, event.getLeft(), event.getPlayer(), recipe.quality());
             ForgingService.applyRequestedName(result, event.getName());
 
@@ -110,6 +110,11 @@ public final class ForgeEvents {
                     "tooltip.alvoradaforge.applied_rune",
                     Component.translatable("rune.alvoradaforge." + rune).withStyle(net.minecraft.ChatFormatting.LIGHT_PURPLE)
             ));
+            Integer accuracy = event.getItemStack().get(ModDataComponents.RUNE_ACCURACY.get());
+            if (accuracy != null) {
+                event.getToolTip().add(detailLine + 1, Component.translatable(
+                        "tooltip.alvoradaforge.rune_accuracy", accuracy));
+            }
         }
     }
 

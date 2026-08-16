@@ -9,6 +9,7 @@ public final class RuneClientPayloadHandler {
     }
 
     public static void handleOpenScreen(OpenRuneScreenPayload payload, IPayloadContext context) {
-        Minecraft.getInstance().setScreen(new RuneDrawingScreen(payload.pos(), payload.runeType()));
+            Minecraft.getInstance().setScreen(new RuneDrawingScreen(
+                    payload.pos(), payload.runeType(), payload.minTier(), payload.maxTier()));
     }
 }

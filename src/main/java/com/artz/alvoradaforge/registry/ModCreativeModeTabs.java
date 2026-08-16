@@ -22,11 +22,29 @@ public final class ModCreativeModeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.FORGING_ANVIL.get());
                         output.accept(ModItems.RUNE_TABLE.get());
+                        output.accept(ModItems.ANCESTRAL_RUNE_TABLE.get());
+                        output.accept(ModItems.MYSTERY_RUNE_STONE.get());
+                        output.accept(ModItems.RUNE_BREAKER_TABLE.get());
+                        output.accept(ModItems.LAPIDARY_SAW.get());
+                        output.accept(ModItems.RAW_LEY_STONE.get());
+                        output.accept(ModItems.ANCIENT_GEODE_HEART.get());
+                        output.accept(ModItems.QUARTZ_DUST.get());
+                        output.accept(ModItems.DIAMOND_DUST.get());
+                        output.accept(ModItems.IRON_SAW_BLADE.get());
+                        output.accept(ModItems.DIAMOND_SAW_BLADE.get());
                         output.accept(ModItems.RUNE_STONE.get());
+                        output.accept(ModItems.ANCESTRAL_RUNE_STONE.get());
+                        output.accept(ModItems.ANCESTRAL_FEATHER.get());
+                        output.accept(ModItems.MYTHRIL_STEEL_INGOT.get());
+                        output.accept(ModItems.REINFORCED_HAMMER_HANDLE.get());
                         output.accept(ModItems.EMBER_INK.get());
                         output.accept(ModItems.TIDE_INK.get());
                         output.accept(ModItems.VERDANT_INK.get());
                         output.accept(ModItems.VOID_INK.get());
+                        output.accept(ModItems.ANCESTRAL_EMBER_INK.get());
+                        output.accept(ModItems.ANCESTRAL_TIDE_INK.get());
+                        output.accept(ModItems.ANCESTRAL_VERDANT_INK.get());
+                        output.accept(ModItems.ANCESTRAL_VOID_INK.get());
                         for (RuneType type : RuneType.values()) {
                             output.accept(ModItems.runeItem(type).get());
                         }
@@ -35,6 +53,10 @@ public final class ModCreativeModeTabs {
                         output.accept(ModItems.GOLD_HAMMER.get());
                         output.accept(ModItems.DIAMOND_HAMMER.get());
                         output.accept(ModItems.NETHERITE_HAMMER.get());
+                        output.accept(ModItems.DWARVEN_TEMPERING_MANUAL.get());
+                        output.accept(ModItems.DWARVEN_MASTERWORK_MANUAL.get());
+                        output.accept(ModItems.KOBOLD_ADVANCED_RUNES_MANUAL.get());
+                        output.accept(ModItems.KOBOLD_LEGENDARY_RUNES_MANUAL.get());
                     })
                     .build()
     );

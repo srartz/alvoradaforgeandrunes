@@ -4,6 +4,8 @@ import com.artz.alvoradaforge.AlvoradaForge;
 import com.artz.alvoradaforge.item.ForgeHammerItem;
 import com.artz.alvoradaforge.item.RuneInkItem;
 import com.artz.alvoradaforge.item.RuneItem;
+import com.artz.alvoradaforge.item.KnowledgeManualItem;
+import com.artz.alvoradaforge.progression.Knowledge;
 import com.artz.alvoradaforge.rune.RuneFamily;
 import com.artz.alvoradaforge.rune.RuneType;
 import java.util.EnumMap;
@@ -21,12 +23,37 @@ public final class ModItems {
 
     public static final DeferredItem<BlockItem> FORGING_ANVIL = ITEMS.registerSimpleBlockItem(ModBlocks.FORGING_ANVIL);
     public static final DeferredItem<BlockItem> RUNE_TABLE = ITEMS.registerSimpleBlockItem(ModBlocks.RUNE_TABLE);
+    public static final DeferredItem<BlockItem> ANCESTRAL_RUNE_TABLE = ITEMS.registerSimpleBlockItem(ModBlocks.ANCESTRAL_RUNE_TABLE);
+    public static final DeferredItem<BlockItem> MYSTERY_RUNE_STONE = ITEMS.registerSimpleBlockItem(ModBlocks.MYSTERY_RUNE_STONE);
+    public static final DeferredItem<BlockItem> RUNE_BREAKER_TABLE = ITEMS.registerSimpleBlockItem(ModBlocks.RUNE_BREAKER_TABLE);
+    public static final DeferredItem<BlockItem> LAPIDARY_SAW = ITEMS.registerSimpleBlockItem(ModBlocks.LAPIDARY_SAW);
 
+    public static final DeferredItem<Item> RAW_LEY_STONE = ITEMS.registerSimpleItem("raw_ley_stone", new Item.Properties());
+    public static final DeferredItem<Item> ANCIENT_GEODE_HEART = ITEMS.registerSimpleItem(
+            "ancient_geode_heart", new Item.Properties().stacksTo(16).fireResistant());
+    public static final DeferredItem<Item> QUARTZ_DUST = ITEMS.registerSimpleItem("quartz_dust", new Item.Properties());
+    public static final DeferredItem<Item> DIAMOND_DUST = ITEMS.registerSimpleItem("diamond_dust", new Item.Properties());
+    public static final DeferredItem<Item> IRON_SAW_BLADE = ITEMS.registerSimpleItem(
+            "iron_saw_blade", new Item.Properties().durability(64));
+    public static final DeferredItem<Item> DIAMOND_SAW_BLADE = ITEMS.registerSimpleItem(
+            "diamond_saw_blade", new Item.Properties().durability(256));
     public static final DeferredItem<Item> RUNE_STONE = ITEMS.registerSimpleItem("rune_stone", new Item.Properties());
-    public static final DeferredItem<RuneInkItem> EMBER_INK = registerInk("ember_ink", RuneFamily.EMBER);
-    public static final DeferredItem<RuneInkItem> TIDE_INK = registerInk("tide_ink", RuneFamily.TIDE);
-    public static final DeferredItem<RuneInkItem> VERDANT_INK = registerInk("verdant_ink", RuneFamily.VERDANT);
-    public static final DeferredItem<RuneInkItem> VOID_INK = registerInk("void_ink", RuneFamily.VOID);
+    public static final DeferredItem<Item> ANCESTRAL_RUNE_STONE = ITEMS.registerSimpleItem("ancestral_rune_stone", new Item.Properties().stacksTo(16));
+    public static final DeferredItem<Item> ANCESTRAL_FEATHER = ITEMS.registerSimpleItem("ancestral_feather", new Item.Properties().stacksTo(16));
+    public static final DeferredItem<Item> MYTHRIL_STEEL_INGOT = ITEMS.registerSimpleItem("mythril_steel_ingot", new Item.Properties());
+    public static final DeferredItem<Item> REINFORCED_HAMMER_HANDLE = ITEMS.registerSimpleItem("reinforced_hammer_handle", new Item.Properties());
+    public static final DeferredItem<RuneInkItem> EMBER_INK = registerInk("ember_ink", RuneFamily.EMBER, 7);
+    public static final DeferredItem<RuneInkItem> TIDE_INK = registerInk("tide_ink", RuneFamily.TIDE, 7);
+    public static final DeferredItem<RuneInkItem> VERDANT_INK = registerInk("verdant_ink", RuneFamily.VERDANT, 7);
+    public static final DeferredItem<RuneInkItem> VOID_INK = registerInk("void_ink", RuneFamily.VOID, 7);
+    public static final DeferredItem<RuneInkItem> ANCESTRAL_EMBER_INK = registerInk("ancestral_ember_ink", RuneFamily.EMBER, 10);
+    public static final DeferredItem<RuneInkItem> ANCESTRAL_TIDE_INK = registerInk("ancestral_tide_ink", RuneFamily.TIDE, 10);
+    public static final DeferredItem<RuneInkItem> ANCESTRAL_VERDANT_INK = registerInk("ancestral_verdant_ink", RuneFamily.VERDANT, 10);
+    public static final DeferredItem<RuneInkItem> ANCESTRAL_VOID_INK = registerInk("ancestral_void_ink", RuneFamily.VOID, 10);
+    public static final DeferredItem<KnowledgeManualItem> DWARVEN_TEMPERING_MANUAL = registerManual("dwarven_tempering_manual", Knowledge.DWARVEN_TEMPERING);
+    public static final DeferredItem<KnowledgeManualItem> DWARVEN_MASTERWORK_MANUAL = registerManual("dwarven_masterwork_manual", Knowledge.DWARVEN_MASTERWORK);
+    public static final DeferredItem<KnowledgeManualItem> KOBOLD_ADVANCED_RUNES_MANUAL = registerManual("kobold_advanced_runes_manual", Knowledge.KOBOLD_ADVANCED_RUNES);
+    public static final DeferredItem<KnowledgeManualItem> KOBOLD_LEGENDARY_RUNES_MANUAL = registerManual("kobold_legendary_runes_manual", Knowledge.KOBOLD_LEGENDARY_RUNES);
     public static final DeferredItem<RuneItem> EMBER_RUNE = registerRune(RuneType.EMBER);
     public static final DeferredItem<RuneItem> TIDE_RUNE = registerRune(RuneType.TIDE);
     public static final DeferredItem<RuneItem> VERDANT_RUNE = registerRune(RuneType.VERDANT);
@@ -49,8 +76,12 @@ public final class ModItems {
     private ModItems() {
     }
 
-    private static DeferredItem<RuneInkItem> registerInk(String name, RuneFamily family) {
-        return ITEMS.register(name, () -> new RuneInkItem(new Item.Properties().stacksTo(16), family));
+    private static DeferredItem<RuneInkItem> registerInk(String name, RuneFamily family, int maxTier) {
+        return ITEMS.register(name, () -> new RuneInkItem(new Item.Properties().stacksTo(16), family, maxTier));
+    }
+
+    private static DeferredItem<KnowledgeManualItem> registerManual(String name, Knowledge knowledge) {
+        return ITEMS.register(name, () -> new KnowledgeManualItem(new Item.Properties().stacksTo(1), knowledge));
     }
 
     private static DeferredItem<RuneItem> registerRune(RuneType type) {

@@ -53,6 +53,7 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
     private UUID owner;
     private int progress;
     private int successfulHits;
+    private int experienceSpent;
     private int requiredHits;
     private int baseCycleTicks = 36;
     private double totalScore;
@@ -108,7 +109,13 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
                 items.getStackInSlot(BASE_SLOT),
                 items.getStackInSlot(ADDITION_SLOT)
         );
-        recipe.ifPresent(value -> start(value, player));
+        recipe.ifPresent(value -> {
+            if (value.canUse(player)) {
+                start(value, player);
+            } else {
+                message(player, "message.alvoradaforge.forging_knowledge_locked", ChatFormatting.RED);
+            }
+        });
     }
 
     private void start(ForgeRecipe recipe, Player player) {
@@ -116,6 +123,7 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
         owner = player.getUUID();
         progress = 0;
         successfulHits = 0;
+        experienceSpent = 0;
         totalScore = 0.0;
         targetCenter = 0.5;
         requiredHits = recipe.requiredHits();
@@ -144,8 +152,8 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
             message(player, "message.alvoradaforge.recipe_removed", ChatFormatting.RED);
             return;
         }
-        if (!player.getAbilities().instabuild && player.experienceLevel < recipe.experienceCost()) {
-            message(player, "message.alvoradaforge.not_enough_levels", ChatFormatting.RED, recipe.experienceCost());
+        if (!recipe.canUse(player)) {
+            message(player, "message.alvoradaforge.forging_knowledge_locked", ChatFormatting.RED);
             return;
         }
 
@@ -155,12 +163,24 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
         }
         lastHitGameTime = gameTime;
 
+        int nextProgress = Math.min(requiredHits, progress + hammer.forgingPower());
+        int nextExperienceTotal = Mth.ceil((double)recipe.experienceCost() * nextProgress / requiredHits);
+        int experienceThisHit = Math.max(0, nextExperienceTotal - experienceSpent);
+        if (!player.getAbilities().instabuild && player.experienceLevel < experienceThisHit) {
+            message(player, "message.alvoradaforge.not_enough_levels", ChatFormatting.RED, experienceThisHit);
+            return;
+        }
+
         double distanceFromTarget = closestRecentMarkerDistance(gameTime, hammer);
         boolean centralHit = distanceFromTarget <= CENTER_HIT_TOLERANCE;
         double score = Mth.clamp(1.0 - distanceFromTarget * 2.0 + hammer.precisionBonus(), 0.0, 1.0);
         totalScore += score;
         successfulHits++;
-        progress = Math.min(requiredHits, progress + hammer.forgingPower());
+        progress = nextProgress;
+        if (!player.getAbilities().instabuild && experienceThisHit > 0) {
+            player.giveExperienceLevels(-experienceThisHit);
+            experienceSpent += experienceThisHit;
+        }
         cycleStarted = gameTime;
 
         boolean targetShifted = centralHit
@@ -202,9 +222,6 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
         ForgeQuality quality = qualityFromScore(average);
         ItemStack result = ForgingService.createResult(recipe, items.getStackInSlot(BASE_SLOT), player, quality);
 
-        if (!player.getAbilities().instabuild) {
-            player.giveExperienceLevels(-recipe.experienceCost());
-        }
         items.setStackInSlot(BASE_SLOT, ItemStack.EMPTY);
         items.setStackInSlot(ADDITION_SLOT, ItemStack.EMPTY);
         items.setStackInSlot(RESULT_SLOT, result);
@@ -360,6 +377,7 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
         owner = null;
         progress = 0;
         successfulHits = 0;
+        experienceSpent = 0;
         requiredHits = 0;
         totalScore = 0.0;
         targetCenter = 0.5;
@@ -423,6 +441,7 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
         owner = tag.hasUUID("Owner") ? tag.getUUID("Owner") : null;
         progress = tag.getInt("Progress");
         successfulHits = tag.getInt("SuccessfulHits");
+        experienceSpent = tag.getInt("ExperienceSpent");
         requiredHits = tag.getInt("RequiredHits");
         baseCycleTicks = tag.contains("CycleTicks") ? tag.getInt("CycleTicks") : 36;
         totalScore = tag.getDouble("TotalScore");
@@ -438,6 +457,7 @@ public final class ForgingAnvilBlockEntity extends BlockEntity {
         }
         tag.putInt("Progress", progress);
         tag.putInt("SuccessfulHits", successfulHits);
+        tag.putInt("ExperienceSpent", experienceSpent);
         tag.putInt("RequiredHits", requiredHits);
         tag.putInt("CycleTicks", baseCycleTicks);
         tag.putDouble("TotalScore", totalScore);

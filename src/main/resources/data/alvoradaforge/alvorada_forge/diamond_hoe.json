@@ -1,0 +1,1 @@
+{"priority":0,"inputs":[{"item":"minecraft:iron_hoe","count":1},{"item":"minecraft:diamond","count":2}],"result":{"id":"minecraft:diamond_hoe","count":1},"experience_cost":4,"hammering":4,"cycle_ticks":38,"quality":"expert","benefits":["auto"],"copy_input_components":true,"anvil_damage_chance":0.10}

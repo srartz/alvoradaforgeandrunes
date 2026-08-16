@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "alvoradaforge:block/mystery_rune_stone"
+  }
+}

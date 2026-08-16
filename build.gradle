@@ -184,6 +184,23 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
+// GameTests are Minecraft integration tests, not JUnit tests. `gameTest` is the
+// verification entry point used locally and by CI; it launches the dedicated
+// GameTest server and exits when every registered scenario has completed.
+tasks.register('gameTest') {
+    group = 'verification'
+    description = 'Runs AlvoradaForge Minecraft GameTests.'
+    dependsOn tasks.named('runGameTestServer')
+}
+
+tasks.named('test') {
+    enabled = false
+}
+
+tasks.named('check') {
+    dependsOn tasks.named('gameTest')
+}
+
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {
     module {

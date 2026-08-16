@@ -19,6 +19,8 @@ public final class ClientModEvents {
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBlockEntities.FORGING_ANVIL.get(), ForgingAnvilRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntities.RUNE_TABLE.get(), RuneTableRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.RUNE_BREAKER_TABLE.get(), RuneBreakerTableRenderer::new);
+        event.registerBlockEntityRenderer(ModBlockEntities.LAPIDARY_SAW.get(), LapidarySawRenderer::new);
     }
 
     @SubscribeEvent

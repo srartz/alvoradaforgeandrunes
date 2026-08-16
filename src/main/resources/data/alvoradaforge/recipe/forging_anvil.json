@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "decorations",
+  "pattern": ["III", "ABA", "III"],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "A": { "item": "minecraft:anvil" },
+    "B": { "item": "minecraft:blast_furnace" }
+  },
+  "result": { "id": "alvoradaforge:forging_anvil", "count": 1 }
+}

@@ -1,0 +1,1 @@
+{"priority":0,"inputs":[{"item":"minecraft:iron_helmet","count":1},{"item":"minecraft:diamond","count":5}],"result":{"id":"minecraft:diamond_helmet","count":1},"experience_cost":6,"hammering":6,"cycle_ticks":34,"quality":"expert","benefits":["auto"],"copy_input_components":true,"anvil_damage_chance":0.14}

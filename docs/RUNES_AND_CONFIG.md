@@ -60,11 +60,26 @@ Coloque na mesa, com clique direito:
 3. uma das quatro tintas especiais.
 
 Quando os três materiais estiverem presentes, a tela de inscrição abre. Use as
-setas para escolher uma das dez runas da família da tinta, segure o botão
+setas para escolher uma das sete runas comuns da família da tinta, segure o botão
 esquerdo do mouse e cubra o glifo claro com um único traço. O servidor valida
 tamanho, comprimento, forma e distância média. Um pequeno desvio é aceito; uma
 tentativa reprovada consome os três materiais. Agache e clique para recuperar
 os ingredientes antes de desenhar.
+
+## Mesa Rúnica Ancestral
+
+As runas de níveis 8, 9 e 10 não podem ser feitas na mesa comum. A mesa
+ancestral exige exatamente uma Pedra Rúnica Ancestral, uma Pena Ancestral e uma
+das quatro Tintas Ancestrais. Materiais comuns e ancestrais são recusados pela
+mesa errada. Os conhecimentos Kobold avançado e lendário continuam sendo
+verificados no servidor.
+
+## Mesa de Ruptura Rúnica
+
+A Pedra Rúnica Misteriosa pode ser colocada sobre esta bancada. Clique com a mão
+vazia para acionar o martelo integrado, ou use um Martelo de Forja próprio. A
+pedra é consumida e revela uma das 40 runas. A chance total de nível 10 é
+`0,0001%`; cada uma das quatro lendárias possui `0,000025%`.
 
 Para aplicar uma runa pronta, segure-a em uma mão, segure a armadura ou
 ferramenta na outra e use a runa. Cada item aceita uma runa. Existem 40 runas,

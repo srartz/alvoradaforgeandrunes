@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": ["DDD", " I ", "DDD"],
+  "key": {
+    "D": { "item": "minecraft:diamond" },
+    "I": { "item": "minecraft:iron_ingot" }
+  },
+  "result": { "id": "alvoradaforge:diamond_saw_blade", "count": 1 }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "decorations",
+  "pattern": ["AMA", "OSO", "O O"],
+  "key": {
+    "A": { "item": "minecraft:amethyst_shard" },
+    "M": { "item": "alvoradaforge:iron_hammer" },
+    "O": { "item": "minecraft:obsidian" },
+    "S": { "item": "minecraft:smithing_table" }
+  },
+  "result": { "id": "alvoradaforge:rune_breaker_table", "count": 1 }
+}

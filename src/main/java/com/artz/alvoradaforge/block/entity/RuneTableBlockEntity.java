@@ -3,9 +3,12 @@ package com.artz.alvoradaforge.block.entity;
 import com.artz.alvoradaforge.item.RuneInkItem;
 import com.artz.alvoradaforge.network.OpenRuneScreenPayload;
 import com.artz.alvoradaforge.registry.ModBlockEntities;
+import com.artz.alvoradaforge.registry.ModBlocks;
 import com.artz.alvoradaforge.registry.ModItems;
 import com.artz.alvoradaforge.rune.RunePatternValidator;
 import com.artz.alvoradaforge.rune.RuneType;
+import com.artz.alvoradaforge.progression.PlayerProgression;
+import com.artz.alvoradaforge.rune.RuneService;
 import java.util.UUID;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
@@ -69,7 +72,9 @@ public final class RuneTableBlockEntity extends BlockEntity {
 
         int slot = slotFor(held);
         if (slot < 0) {
-            message(player, "message.alvoradaforge.rune_table_invalid_item", ChatFormatting.RED);
+            message(player, isAncestral()
+                    ? "message.alvoradaforge.ancestral_rune_table_invalid_item"
+                    : "message.alvoradaforge.rune_table_invalid_item", ChatFormatting.RED);
             return;
         }
         if (!items.getStackInSlot(slot).isEmpty()) {
@@ -90,13 +95,14 @@ public final class RuneTableBlockEntity extends BlockEntity {
     }
 
     private int slotFor(ItemStack stack) {
-        if (stack.is(ModItems.RUNE_STONE.get())) {
+        boolean ancestral = isAncestral();
+        if (stack.is(ancestral ? ModItems.ANCESTRAL_RUNE_STONE.get() : ModItems.RUNE_STONE.get())) {
             return STONE_SLOT;
         }
-        if (stack.is(Items.FEATHER)) {
+        if (stack.is(ancestral ? ModItems.ANCESTRAL_FEATHER.get() : Items.FEATHER)) {
             return FEATHER_SLOT;
         }
-        if (stack.getItem() instanceof RuneInkItem) {
+        if (stack.getItem() instanceof RuneInkItem ink && (ancestral ? ink.maxTier() == 10 : ink.maxTier() <= 7)) {
             return INK_SLOT;
         }
         return -1;
@@ -113,8 +119,10 @@ public final class RuneTableBlockEntity extends BlockEntity {
         owner = player.getUUID();
         ownerSince = level.getGameTime();
         sync();
+        int minTier = isAncestral() ? 8 : 1;
+        RuneType initial = ink.runeFamily().runes().get(minTier - 1);
         PacketDistributor.sendToPlayer(serverPlayer,
-                new OpenRuneScreenPayload(worldPosition, ink.runeFamily().firstRune()));
+                new OpenRuneScreenPayload(worldPosition, initial, minTier, ink.maxTier()));
     }
 
     public void completeRune(ServerPlayer player, RuneType submittedType, byte[] packedPoints) {
@@ -123,8 +131,14 @@ public final class RuneTableBlockEntity extends BlockEntity {
                 || !owner.equals(player.getUUID())
                 || !(items.getStackInSlot(INK_SLOT).getItem() instanceof RuneInkItem ink)
                 || ink.runeFamily() != submittedType.family()
+                || submittedType.tier() < (isAncestral() ? 8 : 1)
+                || submittedType.tier() > ink.maxTier()
                 || !isReady()) {
             message(player, "message.alvoradaforge.rune_table_invalid_attempt", ChatFormatting.RED);
+            return;
+        }
+        if (!PlayerProgression.canDrawRune(player, submittedType.tier())) {
+            message(player, "message.alvoradaforge.rune_knowledge_locked", ChatFormatting.RED);
             return;
         }
 
@@ -133,7 +147,7 @@ public final class RuneTableBlockEntity extends BlockEntity {
         owner = null;
         ownerSince = 0L;
         if (validation.success()) {
-            ItemStack result = new ItemStack(submittedType.runeItem().get());
+            ItemStack result = RuneService.createInscribedRune(submittedType, validation.accuracy());
             if (!player.addItem(result)) {
                 Block.popResource(level, worldPosition.above(), result);
             }
@@ -193,9 +207,13 @@ public final class RuneTableBlockEntity extends BlockEntity {
     }
 
     private void showStatus(Player player) {
-        Component stone = statusComponent(STONE_SLOT, "item.alvoradaforge.rune_stone");
-        Component feather = statusComponent(FEATHER_SLOT, "item.minecraft.feather");
-        Component ink = statusComponent(INK_SLOT, "message.alvoradaforge.any_rune_ink");
+        boolean ancestral = isAncestral();
+        Component stone = statusComponent(STONE_SLOT, ancestral
+                ? "item.alvoradaforge.ancestral_rune_stone" : "item.alvoradaforge.rune_stone");
+        Component feather = statusComponent(FEATHER_SLOT, ancestral
+                ? "item.alvoradaforge.ancestral_feather" : "item.minecraft.feather");
+        Component ink = statusComponent(INK_SLOT, ancestral
+                ? "message.alvoradaforge.any_ancestral_rune_ink" : "message.alvoradaforge.any_rune_ink");
         player.displayClientMessage(Component.translatable("message.alvoradaforge.rune_table_status", stone, feather, ink), true);
     }
 
@@ -208,6 +226,10 @@ public final class RuneTableBlockEntity extends BlockEntity {
         return !items.getStackInSlot(STONE_SLOT).isEmpty()
                 && !items.getStackInSlot(FEATHER_SLOT).isEmpty()
                 && items.getStackInSlot(INK_SLOT).getItem() instanceof RuneInkItem;
+    }
+
+    public boolean isAncestral() {
+        return getBlockState().is(ModBlocks.ANCESTRAL_RUNE_TABLE.get());
     }
 
     public ItemStack getDisplayedItem(int slot) {

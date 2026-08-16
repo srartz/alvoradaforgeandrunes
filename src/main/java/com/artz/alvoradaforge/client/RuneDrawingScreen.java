@@ -17,13 +17,17 @@ public final class RuneDrawingScreen extends Screen {
     private static final int CANVAS_SIZE = 256;
     private final BlockPos tablePos;
     private RuneType runeType;
+    private final int maxTier;
+    private final int minTier;
     private final List<RunePatternValidator.Point> trace = new ArrayList<>();
     private boolean drawing;
 
-    public RuneDrawingScreen(BlockPos tablePos, RuneType runeType) {
+    public RuneDrawingScreen(BlockPos tablePos, RuneType runeType, int minTier, int maxTier) {
         super(Component.translatable("screen.alvoradaforge.rune_drawing"));
         this.tablePos = tablePos;
         this.runeType = runeType;
+        this.minTier = minTier;
+        this.maxTier = maxTier;
     }
 
     @Override
@@ -116,7 +120,9 @@ public final class RuneDrawingScreen extends Screen {
 
     private void selectRelativeRune(int offset) {
         if (!drawing) {
-            runeType = runeType.relative(offset);
+            do {
+                runeType = runeType.relative(offset);
+            } while (runeType.tier() < minTier || runeType.tier() > maxTier);
             trace.clear();
         }
     }

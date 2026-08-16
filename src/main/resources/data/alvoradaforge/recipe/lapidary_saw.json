@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "decorations",
+  "pattern": [" I ", "CSC", "SSS"],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "C": { "item": "minecraft:copper_ingot" },
+    "S": { "item": "minecraft:smooth_stone" }
+  },
+  "result": { "id": "alvoradaforge:lapidary_saw", "count": 1 }
+}

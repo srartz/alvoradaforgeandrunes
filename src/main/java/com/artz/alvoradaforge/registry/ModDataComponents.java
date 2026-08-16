@@ -63,6 +63,14 @@ public final class ModDataComponents {
                     .build()
     );
 
+    public static final Supplier<DataComponentType<Integer>> RUNE_ACCURACY = COMPONENTS.register(
+            "rune_accuracy",
+            () -> DataComponentType.<Integer>builder()
+                    .persistent(Codec.INT)
+                    .networkSynchronized(ByteBufCodecs.VAR_INT)
+                    .build()
+    );
+
     private ModDataComponents() {
     }
 

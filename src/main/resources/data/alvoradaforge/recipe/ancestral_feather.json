@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:feather" },
+    { "item": "minecraft:black_dye" },
+    { "item": "minecraft:gold_ingot" },
+    { "item": "minecraft:echo_shard" }
+  ],
+  "result": { "id": "alvoradaforge:ancestral_feather", "count": 1 }
+}

@@ -2,7 +2,9 @@ package com.artz.alvoradaforge.registry;
 
 import com.artz.alvoradaforge.AlvoradaForge;
 import com.artz.alvoradaforge.block.entity.ForgingAnvilBlockEntity;
+import com.artz.alvoradaforge.block.entity.LapidarySawBlockEntity;
 import com.artz.alvoradaforge.block.entity.RuneTableBlockEntity;
+import com.artz.alvoradaforge.block.entity.RuneBreakerTableBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -22,7 +24,22 @@ public final class ModBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RuneTableBlockEntity>> RUNE_TABLE =
             BLOCK_ENTITIES.register(
                     "rune_table",
-                    () -> BlockEntityType.Builder.of(RuneTableBlockEntity::new, ModBlocks.RUNE_TABLE.get()).build(null)
+                    () -> BlockEntityType.Builder.of(RuneTableBlockEntity::new,
+                            ModBlocks.RUNE_TABLE.get(), ModBlocks.ANCESTRAL_RUNE_TABLE.get()).build(null)
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RuneBreakerTableBlockEntity>> RUNE_BREAKER_TABLE =
+            BLOCK_ENTITIES.register(
+                    "rune_breaker_table",
+                    () -> BlockEntityType.Builder.of(RuneBreakerTableBlockEntity::new,
+                            ModBlocks.RUNE_BREAKER_TABLE.get()).build(null)
+            );
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<LapidarySawBlockEntity>> LAPIDARY_SAW =
+            BLOCK_ENTITIES.register(
+                    "lapidary_saw",
+                    () -> BlockEntityType.Builder.of(LapidarySawBlockEntity::new,
+                            ModBlocks.LAPIDARY_SAW.get()).build(null)
             );
 
     private ModBlockEntities() {
